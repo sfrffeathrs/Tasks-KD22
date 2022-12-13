@@ -6,6 +6,36 @@ form.addEventListener('submit', addTask)
 tasksList.addEventListener('click', deleteTask)
 clearTasksBtn.addEventListener('click', deleteAllTasks)
 
+document.addEventListener('DOMContentLoaded', getTasks)
+
+function getTasks(event) {
+    //add task to localStorage
+    let tasks // array for user input
+    if(localStorage.getItem('tasks') === null){
+        tasks = []
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'))
+    }
+    // loop array for each element value
+    tasks.forEach(function (task){
+        let li = document.createElement('li')
+        li.className = 'collection-item'
+        let liText = document.createTextNode(task)
+        li.appendChild(liText)
+
+        let a = document.createElement('a')
+        a.className = 'teal-text lighten-2 secondary-content'
+        let aText = document.createTextNode('X')
+        a.appendChild(aText)
+        a.setAttribute('href', '#')
+
+        li.appendChild(a)
+
+        const ul = document.querySelector('ul')
+        ul.appendChild(li)
+    })
+}
+
 function deleteAllTasks() {
     // tasksList.innerHTML = ''
     while(tasksList.firstChild) {
