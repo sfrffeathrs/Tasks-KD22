@@ -43,10 +43,29 @@ function deleteAllTasks() {
     }
 }
 
-function deleteTask(e) {
-    if(e.target.textContent == 'X') {
+function deleteTask(event) {
+    if(event.target.textContent === 'X') {
         if(confirm("Do you want to delete this task?")) {
-            e.target.parentElement.remove()
+            event.target.parentElement.remove()
+            // get task value from DOM li element textContent
+            let liText = event.target.parentElement.textContent
+            let liTextCorrect = liText.slice(0, liText.length-1)
+            // get data from LS
+            let tasks // array for user input
+            if(localStorage.getItem('tasks') === null){
+                tasks = []
+            } else {
+                tasks = JSON.parse(localStorage.getItem('tasks'))
+            }
+            // loop all tasks elements
+            tasks.forEach(function(task, index){
+                // get element with the same value as clicked
+                if(task == liTextCorrect){
+                    tasks.splice(index, 1) //delete this element from data array
+                }
+            })
+
+            localStorage.setItem('tasks', JSON.stringify(tasks)) //save updated data to LS
         }
     }
 }
