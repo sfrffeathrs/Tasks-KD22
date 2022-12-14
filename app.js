@@ -41,6 +41,7 @@ function deleteAllTasks() {
     while(tasksList.firstChild) {
         tasksList.removeChild(tasksList.firstChild)
     }
+    localStorage.removeItem('tasks')
 }
 
 function deleteTask(event) {
